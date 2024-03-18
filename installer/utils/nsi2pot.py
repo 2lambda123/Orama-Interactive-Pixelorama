@@ -76,7 +76,7 @@ LangStringLabels = {}
 # What we're doing here is looping through each line of our .nsi till we find a LangString of the default language
 # Then, we try and grab the line number, the label, and the text
 # The text can be multiline, so we have to sometimes continue reading till we reach the end
-line=NSIWorkingFile.readline()
+line=NSIWorkingFile.readline(5_000_000)
 lineNo = 1
 while line != '':
     commands =  line.split()
@@ -94,7 +94,7 @@ while line != '':
                     line = removeEscapedNewLine(line)
                     # Keep reading till we reach the end
                     value = line[start:]
-                    line = NSIWorkingFile.readline()
+                    line = NSIWorkingFile.readline(5_000_000)
                     lineNo += 1
                     while line != '':
                         line = removeEscapedNewLine(line)
@@ -104,7 +104,7 @@ while line != '':
                             break
                         else: #If not, append and continue
                             value += line.lstrip()
-                        line=NSIWorkingFile.readline()
+                        line=NSIWorkingFile.readline(5_000_000)
                         lineNo += 1
 
             # Remove whitespace and new lines
@@ -120,7 +120,7 @@ while line != '':
             # Note down our label
             LangStringLabels[value].append(label)
             
-    line=NSIWorkingFile.readline()
+    line=NSIWorkingFile.readline(5_000_000)
     lineNo += 1
 
 # Now, we loop through our cache and build PO entries for each
